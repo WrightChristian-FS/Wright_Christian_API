@@ -5,7 +5,12 @@ namespace Wright_Christian_API
     {
         public App()
         {
-            Console.WriteLine("Connected");
+
+            Console.Clear();
+
+            Console.WriteLine("TEST");
+
         }
     }
+
 }
