@@ -6,7 +6,7 @@ namespace Wright_Christian_API
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            App app = new App(); 
         }
     }
 }
