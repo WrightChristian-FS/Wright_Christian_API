@@ -79,7 +79,7 @@ namespace Wright_Christian_API
         public List<Tracks> GetTracks(string artistID, string albumID)
         {
             List<Tracks> trackList = new List<Tracks>();
-            string url = "https://api.happi.dev/v1/music/artists/301/albums/4161244/tracks?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
+            string url = "https://api.happi.dev/v1/music/artists/" +artistID+ "/albums/"+albumID+"/tracks?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
 
             //CONNECT TO THE API
             dynamic jo = Connect(url); 
