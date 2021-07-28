@@ -13,6 +13,12 @@ namespace Wright_Christian_API
             //Connect to the API 
             Connector apiConnect = new Connector();
 
+            apiConnect.GetArtist();
+
+       
+
+            apiConnect.GetTracks("301", "4161244"); 
+
 
         }
     }
