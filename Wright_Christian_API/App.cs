@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * Christian Wright 
+ * 30JUL2021
+ * APA 
+ * 
+ * API Application
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 
 namespace Wright_Christian_API
@@ -18,47 +27,88 @@ namespace Wright_Christian_API
 
             //VARIABLES
             bool continueApplication = true;
-
+            string artistChoice;
+            string albumChoice; 
 
             while (continueApplication)
             {
                 PrintArtist(apiConnect);
 
                 //Ask the user which artist they want to view
+                UI.ConfirmUI(); 
                 Console.Write("\r\nEnter the artist ID to view the artist albums: ");
+                UI.StandardUI();
 
                 //Capture the answer and validate the answer
                 UI.InputUI();
-                string userArtistChoice = Validation.StringValidation(Console.ReadLine());
+                artistChoice = Validation.StringValidation(Console.ReadLine());
                 UI.StandardUI();
 
 
                 //Pass the artist infomation
-                bool isArtist = Artist.VerifyArtistSelection(userArtistChoice, artistMenuList);
+                bool isArtist = Artist.VerifyArtistSelection(artistChoice, artistMenuList);
 
-                if (userArtistChoice.ToLower() == "exit")
+                if (artistChoice.ToLower() == "exit")
                 {
                     continueApplication = false;
 
                     Console.WriteLine("\r\nGoodbye..");
                     Continue();
+                    break; 
 
                 }
                 else if (isArtist == false)
                 {
+                    //Tell the user the artist they selected is not a valid artist 
+                    UI.ErrorUI(); 
                     Console.WriteLine("\r\nSorry, that is not a valid try again");
+                    UI.StandardUI(); 
                     Continue();
 
                 }
                 else if (isArtist == true)
                 {
 
-                    PrintAlbums(apiConnect, userArtistChoice);
+                    
+                    //Print the artist album list
+                    PrintAlbums(apiConnect, artistChoice);
+
+                    //Ask the user which artist they want to see
+                    Console.Write("\r\nEnter the album ID to view the albums tracks: ");
+
+                    //Capture the answer and validate the answer
+                    UI.InputUI();
+                    albumChoice = Validation.StringValidation(Console.ReadLine());
+                    UI.StandardUI();
+
+                    //Verify the user album selection is a valid album 
+                    bool isAlbum = Albums.VerifyAlbumSelection(albumChoice, albumMenuList);
+
+                    if(albumChoice.ToLower() == "exit")
+                    {
+                        continueApplication = false;
+
+                        Console.WriteLine("\r\nGoodbye..");
+                        Continue();
+                        break;
+                    }
+
+                    else if (isAlbum == false)
+                    {
+                        //Tell the user the artist they selected is not a valid artist 
+                        UI.ErrorUI();
+                        Console.WriteLine("\r\nSorry, that is not a valid album ID try again");
+                        UI.StandardUI();
+                        Continue();
+                    }
+
+                    else if (isAlbum == true)
+                    {
+                        //Print the album tracks 
+                        PrintTracks(apiConnect, artistChoice, albumChoice); 
+                    }
 
                     Continue(); 
-
-
-
                 }
 
             }
@@ -122,8 +172,30 @@ namespace Wright_Christian_API
 
         }
 
-        public static void PrintTracks()
+        public static void PrintTracks(Connector apiConnector, string artistID, string albumID)
         {
+            Connector apiConnection = new Connector();
+
+            //Capture list of 
+            List<Tracks> trackListObject = apiConnection.GetTracks(artistID, albumID);
+            Dictionary<string, string> trackList = new Dictionary<string, string>(); 
+
+            //Print list of tracks 
+            foreach(Tracks track in trackListObject)
+            {
+                string trackID = track.TrackID;
+                string trackName = track.Track;
+
+                trackList.Add(trackID, trackName); 
+                
+            }
+
+
+            //Initate the menu
+            Menu.Init("Tracks", trackList);
+            Menu.Display(); 
+            
+
 
         }
 

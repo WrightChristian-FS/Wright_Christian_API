@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * Christian Wright 
+ * 30JUL2021
+ * APA 
+ * 
+ * API Application
+ * 
+ */
+
+using System;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Collections.Generic; 
@@ -78,7 +87,7 @@ namespace Wright_Christian_API
 
         public List<Tracks> GetTracks(string artistID, string albumID)
         {
-            List<string> trackList = new List<string>(); 
+            List<Tracks> trackList = new List<Tracks>(); 
             string url = "https://api.happi.dev/v1/music/artists/" +artistID+ "/albums/"+albumID+"/tracks?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
 
             //CONNECT TO THE API
@@ -91,14 +100,14 @@ namespace Wright_Christian_API
                 string trackID = track.id_track; 
 
                 //INSTANTIATE A NEW TRACK
-                Tracks newTrack = new Tracks(trackName);
+                Tracks newTrack = new Tracks(trackID,trackName);
 
                 //ADD THE TRACK TO THE TRACK LIST
-                trackList.Add(trackName);   
+                trackList.Add(newTrack);   
             }
 
             //RETURN THE TRACKLIST 
-            return trackList; 
+            return trackList;
         }
 
 

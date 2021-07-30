@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Christian Wright 
+ * 30JUL2021
+ * APA 
+ * 
+ * API Application
+ * 
+ */
+
+using System;
+using System.Collections.Generic; 
+
 namespace Wright_Christian_API
 {
     public class Albums
@@ -14,5 +25,25 @@ namespace Wright_Christian_API
             AlbumID = albumID;
             AlbumTitle = albumTitle; 
         }
+
+        public static bool VerifyAlbumSelection(string userInput, Dictionary<string, string> albumInformation)
+        {
+            bool albumConfirmation = false;
+
+
+            foreach (KeyValuePair<string, string> item in albumInformation)
+            {
+                if (userInput == item.Key)
+                {
+                    albumConfirmation = true;
+                    break;
+                }
+            }
+
+            return albumConfirmation;
+        }
+
+
+
     }
 }
