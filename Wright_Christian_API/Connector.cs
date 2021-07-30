@@ -55,7 +55,7 @@ namespace Wright_Christian_API
         public List<Albums> GetAlbums(string artistID)
         {
             List<Albums> albumList = new List<Albums>();
-            string url = "https://api.happi.dev/v1/music/artists/301/albums?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
+            string url = "https://api.happi.dev/v1/music/artists/" + artistID + "/albums?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
 
             dynamic jo = Connect(url);
 
@@ -66,7 +66,7 @@ namespace Wright_Christian_API
                 string albumTitle = album.album;
 
                 //INSTANTIATE NEW 
-                Albums newAlbum = new Albums(albumID, albumTitle);
+                Albums newAlbum = new Albums(artistID, albumID, albumTitle);
 
                 //ADD ALBUM TO ALBUM LIST
                 albumList.Add(newAlbum); 
@@ -78,7 +78,7 @@ namespace Wright_Christian_API
 
         public List<Tracks> GetTracks(string artistID, string albumID)
         {
-            List<Tracks> trackList = new List<Tracks>();
+            List<string> trackList = new List<string>(); 
             string url = "https://api.happi.dev/v1/music/artists/" +artistID+ "/albums/"+albumID+"/tracks?apikey=c076cfkJAzGoKyKqJFtiI9sPoRCaEtf4a0n8vfxu3IyXTj1dZeq3CSKx";
 
             //CONNECT TO THE API
@@ -86,10 +86,18 @@ namespace Wright_Christian_API
 
             foreach(dynamic track in jo.result.tracks)
             {
-                Console.WriteLine(track.track);
+                //STRING VARIABLE TO HOLD THE TRACK NAME 
+                string trackName = track.track;
+                string trackID = track.id_track; 
+
+                //INSTANTIATE A NEW TRACK
+                Tracks newTrack = new Tracks(trackName);
+
+                //ADD THE TRACK TO THE TRACK LIST
+                trackList.Add(trackName);   
             }
 
-
+            //RETURN THE TRACKLIST 
             return trackList; 
         }
 
